@@ -5,12 +5,11 @@ class StationFacade
   end
 
   def stations
-    response = Faraday.new(url: "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json") do |f|
-      f.headers['api-key'] = ENV['NREL_API_KEY']
-      f.headers['fuel_type'] = 'LPG,ELEC'
-      f.headers['location'] = @zip
+    conn = Faraday.new(url: "https://developer.nrel.gov") do |f|
       f.adapter  Faraday.default_adapter
     end
-    binding.pry
+
+    response = conn.get("/api/alt-fuel-stations/v1/nearest.json?fuel_type=LPG,ELEC&api_key=#{ENV['NREL_API_KEY']}&location=#{@zip}")
+    parsed_json = Json.parse(response.body, symbolize_names: true)
   end
 end
