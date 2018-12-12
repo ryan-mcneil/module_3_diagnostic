@@ -3,7 +3,11 @@
 <div class="stations">
   <% @facade.stations(10).each do |station| %>
     <div class="station">
-
+      <h3><%= station.name %></h3>
+      <p>Address: <%= station.address %></p>
+      <p>Fuel Type: <%= station.fuel_types %></p>
+      <p>Distance: <%= station.distance %></p>
+      <p>Hours: <%= station.access_times %></p><br>
     </div>
   <% end %>
 </div>
